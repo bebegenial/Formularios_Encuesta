@@ -36,17 +36,25 @@ Su propósito es ayudar a reconocer cómo aprende, se expresa y se relaciona su 
 # Aviso de Habeas Data
 st.header("📜 Aviso de Privacidad y Tratamiento de Datos")
 acepto = st.checkbox("""
-Este formulario tiene como finalidad recoger sus datos personales necesarios para el proceso de envío de sus productos. Los datos que solicitamos incluyen información de contacto, dirección de envío y cualquier dato pertinente para garantizar una correcta entrega.
+Este formulario tiene como finalidad recolectar sus datos personales para procesar los resultados del **Test de Inteligencias Múltiples** y brindar una orientación personalizada sobre el perfil de aprendizaje de su hijo(a). 
 
-La información recolectada será tratada bajo los principios de confidencialidad y seguridad, conforme a la **Ley 1581 de 2012 de Protección de Datos Personales (Habeas Data)** en Colombia. El responsable del tratamiento de estos datos es **Editorial Bebe Genial**.
+La información recolectada será tratada bajo los principios de confidencialidad y seguridad, conforme a la **Ley 1581 de 2012 de Protección de Datos Personales (Habeas Data)** en Colombia.
 
-Sus datos serán usados exclusivamente para gestionar el envío del producto adquirido y envío de publicidad de nuestros productos y servicios y no serán compartidos con terceros no autorizados. Usted tiene derecho a acceder, corregir o solicitar la eliminación de sus datos en cualquier momento, contactándonos a través del correo **servicioalcliente@bebegenial.com**.
+El responsable del tratamiento de estos datos es **Editorial Bebe Genial**.
 
-Para continuar, debe aceptar nuestra Política de Privacidad, la cual puede consultar [aquí](https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=49921).
+Al registrar sus datos, **usted autoriza a la editorial para**:
+
+1.Gestionar y entregar los resultados del presente test.
+
+2.Enviarle información pedagógica, publicidad de nuestros productos y servicios educativos.
+
+3.Contactarlo para asesoría sobre el material didáctico que mejor se adapte a los resultados obtenidos.
+
+Usted tiene derecho a conocer, actualizar y rectificar sus datos en cualquier momento a través del correo **servicioalcliente@bebegenial.com**.
+
+Puede consultar nuestra Política de Privacidad [aquí](https://www.bebegenial.com/privacy-policy/).
 
 **Al marcar esta casilla, usted acepta el tratamiento de sus datos conforme a lo descrito.**
-
-*Marque la casilla para continuar:*
 """)
 
 # Si no acepta, no se muestra el formulario
