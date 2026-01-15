@@ -206,6 +206,6 @@ if procesado:
         st.pyplot(fig2)
 
         # Deshabilitar botón
-        st.success("¡Resultados procesados y guardados con éxito!")
+        st.success("Gracias por ser parte de la familia Bebe Genial.\nTu opinión nos ayuda a crear experiencias cada vez más significativas para ti y tu familia.")
         st.button("Procesar resultados", disabled=True, key="boton_procesar_deshabilitado")
 
