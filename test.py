@@ -207,11 +207,42 @@ if procesado:
         plt.xticks(rotation=45, ha='right')  # Inclinar etiquetas a 45 grados
         st.pyplot(fig)
 
-        # Gráfico general
+        ###########################################################################################
+        # Gráfico general radar chart
+        '''
         fig2, ax2 = plt.subplots(figsize=(8, 8))
         ax2.pie(subtotales.values(), labels=subtotales.keys(), autopct="%1.1f%%")
         ax2.set_title("Distribución de Inteligencias")
         st.pyplot(fig2)
+        '''
+        # Gráfico de radar
+        fig2 = plt.figure(figsize=(8, 8))
+        ax2 = fig2.add_subplot(111, polar=True)
+
+        # Configurar los ángulos para cada inteligencia
+        categorias = list(subtotales.keys())
+        N = len(categorias)
+        angulos = [n / float(N) * 2 * 3.14159 for n in range(N)]
+        angulos += angulos[:1]  # Cerrar el gráfico
+
+        # Valores de las puntuaciones
+        valores = list(subtotales.values())
+        valores += valores[:1]  # Cerrar el gráfico
+
+        # Dibujar el radar chart
+        ax2.plot(angulos, valores, color='blue', linewidth=2, linestyle='solid', label='Puntuación')
+        ax2.fill(angulos, valores, color='blue', alpha=0.25)
+
+        # Configurar las etiquetas y título
+        ax2.set_thetagrids([a * 180/3.14159 for a in angulos[:-1]], categorias)
+        ax2.set_title("Perfil de Inteligencias Múltiples", size=15, y=1.1)
+        ax2.grid(True)
+
+        # Establecer el límite del eje radial
+        ax2.set_ylim(0, 12)
+
+        st.pyplot(fig2)
+        ###########################################################################################
 
         # Deshabilitar botón
         st.success("Gracias por ser parte de la familia Bebe Genial.\nTu opinión nos ayuda a crear experiencias cada vez más significativas para ti y tu familia.")
