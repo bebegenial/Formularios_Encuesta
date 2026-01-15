@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from drive import guardar_en_google_sheets
-
+#pip freeze > requirements.txt
+#streamlit run test.py
 
 # Configuración de la página para que sea responsiva
 st.set_page_config(layout="wide")
