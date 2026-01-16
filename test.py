@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from drive import guardar_en_google_sheets
+import datetime
 #pip freeze > requirements.txt
 #streamlit run test.py
 
@@ -81,6 +82,15 @@ st.header("✨ Recolección de datos")
 nombre = st.text_input("Nombre del padre o representante legal:")
 correo = st.text_input("Correo electrónico:")
 telefono = st.text_input("Teléfono:")
+nombre_nino = st.text_input("Nombre del niño:")
+fecha_nacimiento = st.date_input(
+    "Fecha de nacimiento del niño:",
+    value=None, # Puedes poner datetime.date(2015, 1, 1) como predeterminado
+    min_value=datetime.date.today() - datetime.timedelta(days=2555), # Límite inferior
+    max_value=datetime.date.today() - datetime.timedelta(days=730),
+    #max_value=datetime.date.today(),      # No permite fechas futuras
+    format="DD/MM/YYYY"
+)
 id_comercial = st.selectbox("ID del comercial:", index=None ,options=list(comerciales.keys()))
 
 # Validación de correo y teléfono
@@ -88,7 +98,16 @@ def validar_correo(correo):
     return "@" in correo and "." in correo.split("@")[-1]
 
 def validar_telefono(telefono):
-    return telefono.isdigit() and len(telefono) >= 7
+    # Primero verificamos que sean solo números
+    if not telefono.isdigit():
+        return False
+    
+    # Si inicia con "3", la longitud debe ser >= 10
+    if telefono.startswith("3"):
+        return len(telefono) >= 10
+    
+    # Para cualquier otro caso, mantenemos la regla de longitud >= 7
+    return len(telefono) >= 7
 
 # Sección de preguntas
 st.header("📝 Test de Inteligencias Múltiples")
@@ -147,7 +166,7 @@ respuestas = {}
 for i, pregunta in enumerate(preguntas):
     respuestas[f"pregunta_{i+1}"] = st.radio(
         f"**{i+1}. {pregunta}**",
-        options=["Nunca", "Rara vez", "A veces", "Siempre o casi siempre"],
+        options=["Nunca", "Ocasionalmente", "Frecuentemente", "Siempre"],
         index=None,  # Evita que esté preseleccionado
         key=f"pregunta_{i+1}"
     )
@@ -159,6 +178,12 @@ if procesado:
     # Validar datos
     if not validar_correo(correo):
         st.error("Por favor, ingresa un correo electrónico válido.")
+    elif not nombre:
+        st.error("Por favor, ingresa el nombre del padre o representante legal.")
+    elif not nombre_nino:
+        st.error("Por favor, ingresa el nombre del niño.")
+    elif not fecha_nacimiento:
+        st.error("Por favor, ingresa la fecha de nacimiento del niño.")
     elif not validar_telefono(telefono):
         st.error("Por favor, ingresa un número de teléfono válido.")
     elif any(respuesta is None for respuesta in respuestas.values()):
@@ -169,9 +194,9 @@ if procesado:
         # Asignar valores numéricos según la respuesta seleccionada
         valores_respuestas = {
             "Nunca": 0,
-            "Rara vez": 1,
-            "A veces": 2,
-            "Siempre o casi siempre": 3
+            "Ocasionalmente": 1,
+            "Frecuentemente": 2,
+            "Siempre": 3
         }
 
         # Calcular subtotales
@@ -187,7 +212,7 @@ if procesado:
         nombre_comercial = comerciales[id_comercial]
 
         # Guardar en Google Sheets
-        guardar_en_google_sheets(nombre, correo, telefono, nombre_comercial, respuestas)
+        guardar_en_google_sheets(nombre, correo, telefono, nombre_nino, str(fecha_nacimiento), nombre_comercial, respuestas)
 
         # Mostrar resultados
         st.header("📊 Resultados")
@@ -209,12 +234,6 @@ if procesado:
 
         ###########################################################################################
         # Gráfico general radar chart
-        '''
-        fig2, ax2 = plt.subplots(figsize=(8, 8))
-        ax2.pie(subtotales.values(), labels=subtotales.keys(), autopct="%1.1f%%")
-        ax2.set_title("Distribución de Inteligencias")
-        st.pyplot(fig2)
-        '''
         # Gráfico de radar
         fig2 = plt.figure(figsize=(8, 8))
         ax2 = fig2.add_subplot(111, polar=True)

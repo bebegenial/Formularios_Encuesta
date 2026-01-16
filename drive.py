@@ -10,7 +10,7 @@ import streamlit as st
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
 
-def guardar_en_google_sheets(nombre, correo, telefono, comercial, respuestas):
+def guardar_en_google_sheets(nombre, correo, telefono, nombre_nino, fecha_nacimiento, comercial, respuestas):
     """
     Guarda los datos del test en una hoja de cálculo de Google Sheets.
 
@@ -63,7 +63,7 @@ def guardar_en_google_sheets(nombre, correo, telefono, comercial, respuestas):
     fecha_hora = datetime.now(bogota_tz).strftime("%d/%m/%Y %H:%M:%S")
 
     # Preparar los datos para guardar
-    datos = [fecha_hora, nombre, correo, telefono, comercial] + [respuestas[f"pregunta_{i+1}"] for i in range(32)]
+    datos = [fecha_hora, nombre, correo, telefono, nombre_nino, fecha_nacimiento, comercial] + [respuestas[f"pregunta_{i+1}"] for i in range(32)]
 
     # Guardar en Google Sheets
     sheet.append_row(datos)
