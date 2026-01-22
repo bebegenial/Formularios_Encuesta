@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from datetime import datetime
-from appsheet import preparar_datos
+#from appsheet import preparar_datos
 import pytz
 import http.client
 import json
